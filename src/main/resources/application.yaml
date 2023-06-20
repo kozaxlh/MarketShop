@@ -1,0 +1,26 @@
+spring:
+   datasource:
+      url: jdbc:mysql://localhost:3306/marketshop
+      username: root
+      password: 
+      driver-class-name: com.mysql.cj.jdbc.Driver
+   jpa:
+      database-platform: org.hibernate.dialect.MySQLDialect
+      generate-ddl: true
+      show-sql: true
+      hibernate:
+         ddl-auto: update
+      properties:
+         hibernate:
+            globally_quoted_identifiers: true
+            format_sql: true
+#   security:
+#      oauth2:
+#         client:
+#            registration:
+#               google:
+#                  client-id: 290841963773-mba17llg18pv13endjkngra3oink92jv.apps.googleusercontent.com
+#                  client-secret: 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
+#               facebook:
+#                  client-id:
+#                  client-secret:
