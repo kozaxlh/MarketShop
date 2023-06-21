@@ -2,26 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/springframework/RestController.java to edit this template
  */
-package com.example.MarketShop.Controller;
+package com.example.MarketShop.API;
 
+import com.example.MarketShop.DTO.PageObject;
 import com.example.MarketShop.DTO.ProductDTO;
 import com.example.MarketShop.Exception.AppException;
 import com.example.MarketShop.DTO.ResponseObject;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import java.util.List;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import com.example.MarketShop.Service.Interface.ProductService;
 import jakarta.validation.Valid;
 
@@ -30,20 +24,25 @@ import jakarta.validation.Valid;
  * @author Admin
  */
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/api/product")
 public class ProductController {
-
-    @Autowired
-    private ModelMapper modelMapper;
+    final private String DEFAULT_PAGE_LIMIT = "5";
+    final private String DEFAULT_PAGE = "1";
 
     @Autowired
     private ProductService productService;
 
     @GetMapping()
-    public ResponseEntity<List<ProductDTO>> getProductList() {
-        List<ProductDTO> list = productService.getProductList();
+    public ResponseEntity<ResponseObject> getProductList(
+            @RequestParam(defaultValue = DEFAULT_PAGE) int page,
+            @RequestParam(defaultValue = DEFAULT_PAGE_LIMIT) int limit) {
+        Pageable pageable = PageRequest.of(page - 1, limit);
+        PageObject result = new PageObject();
+        result.setPage(page);
+        result.setList(productService.getProductList(pageable));
+        result.setTotalPage((int) Math.ceil( (double) productService.totalPage() / limit));
 
-        return new ResponseEntity<List<ProductDTO>>(list, HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Success", "Đã lấy được sản phẩm", result));
     }
 
     @GetMapping("/{id}")
@@ -65,7 +64,7 @@ public class ProductController {
         );
     }
 
-    @PostMapping("/insert")
+    @PostMapping()
     public ResponseEntity<ResponseObject> addProduct(@RequestBody @Valid ProductDTO input) {
         ProductDTO product = productService.addProduct(input);
 
