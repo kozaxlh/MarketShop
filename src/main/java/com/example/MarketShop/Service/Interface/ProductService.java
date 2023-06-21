@@ -4,23 +4,25 @@
  */
 package com.example.MarketShop.Service.Interface;
 
-import com.example.MarketShop.Exception.AppException;
 import com.example.MarketShop.DTO.ProductDTO;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
-import java.util.Optional;
 
 /**
  *
  * @author Admin
  */
 public interface ProductService {
-    List<ProductDTO> getProductList();
-    
     ProductDTO addProduct(ProductDTO product);
+
+    List<ProductDTO> getProductList(Pageable pageable);
 
     ProductDTO findByID(Integer productID);
 
     ProductDTO updateProduct(ProductDTO newProduct);
 
     String deleteProduct(Integer productID);
+
+    int totalPage();
 }

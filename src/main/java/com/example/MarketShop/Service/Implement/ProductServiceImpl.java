@@ -7,8 +7,10 @@ package com.example.MarketShop.Service.Implement;
 import com.example.MarketShop.DTO.ProductDTO;
 import com.example.MarketShop.Exception.AppException;
 import com.example.MarketShop.Model.Product;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.example.MarketShop.Repository.ProductRepository;
 import com.example.MarketShop.Service.Interface.ProductService;
@@ -23,7 +25,6 @@ import org.springframework.http.HttpStatus;
  */
 @Service
 public class ProductServiceImpl implements ProductService {
-
     @Autowired
     private ModelMapper modelMapper;
 
@@ -31,8 +32,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public List<ProductDTO> getProductList() {
-        List list = productRepository.findAll()
+    public List<ProductDTO> getProductList(Pageable pageable) {
+        List list = productRepository.findAll(pageable).getContent()
                 .stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .collect(Collectors.toList());
@@ -90,4 +91,8 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public int totalPage(){
+        return (int) productRepository.count() ;
+    };
 }
