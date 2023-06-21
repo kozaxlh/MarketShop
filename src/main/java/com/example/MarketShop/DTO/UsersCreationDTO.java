@@ -4,11 +4,12 @@
  */
 package com.example.MarketShop.DTO;
 
-import java.io.Serializable;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -17,20 +18,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO implements Serializable {
+public class UsersCreationDTO implements Serializable {
     private Integer userID;
-
     private String email;
-    
-    private String password;
-    
     private String fullname;
-    
-    private String address;
-    
-    private String city;
-    
-    private List<String> userRoles;
-    
-    private List<Integer> ordersID;
+    private String password;
 }
