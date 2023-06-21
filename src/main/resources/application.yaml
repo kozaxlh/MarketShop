@@ -21,6 +21,6 @@ spring:
                google:
                   client-id: 290841963773-mba17llg18pv13endjkngra3oink92jv.apps.googleusercontent.com
                   client-secret: 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
-#               facebook:
-#                  client-id:
-#                  client-secret:
+               facebook:
+                  client-id: 287841917045961
+                  client-secret: b10925744cfb5cb3976fcdb63005c328
