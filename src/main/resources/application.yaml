@@ -14,13 +14,13 @@ spring:
          hibernate:
             globally_quoted_identifiers: true
             format_sql: true
-#   security:
-#      oauth2:
-#         client:
-#            registration:
-#               google:
-#                  client-id: 290841963773-mba17llg18pv13endjkngra3oink92jv.apps.googleusercontent.com
-#                  client-secret: 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
+   security:
+      oauth2:
+         client:
+            registration:
+               google:
+                  client-id: 290841963773-mba17llg18pv13endjkngra3oink92jv.apps.googleusercontent.com
+                  client-secret: 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
 #               facebook:
 #                  client-id:
 #                  client-secret:

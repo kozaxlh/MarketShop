@@ -4,6 +4,7 @@
  */
 package com.example.MarketShop.DTO;
 
+import java.io.Serializable;
 import java.util.Collection;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDTO {
+public class CategoryDTO implements Serializable {
 
     private Integer catagoryID;
     private String name;

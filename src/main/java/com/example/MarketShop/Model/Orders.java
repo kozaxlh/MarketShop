@@ -32,7 +32,7 @@ import lombok.Data;
  */
 @Entity
 @Data
-@Table(catalog = "marketshop", schema = "")
+@Table(name = "Orders", catalog = "marketshop")
 @NamedQueries({
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
     @NamedQuery(name = "Orders.findByOrderID", query = "SELECT o FROM Orders o WHERE o.orderID = :orderID"),
@@ -82,78 +82,4 @@ public class Orders implements Serializable {
         this.total = total;
         this.note = note;
     }
-
-    public Integer getOrderID() {
-        return orderID;
-    }
-
-    public void setOrderID(Integer orderID) {
-        this.orderID = orderID;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public float getTotal() {
-        return total;
-    }
-
-    public void setTotal(float total) {
-        this.total = total;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public Users getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Users customer) {
-        this.customer = customer;
-    }
-
-    public Collection<Orderdetail> getOrderdetailCollection() {
-        return orderdetailCollection;
-    }
-
-    public void setOrderdetailCollection(Collection<Orderdetail> orderdetailCollection) {
-        this.orderdetailCollection = orderdetailCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (orderID != null ? orderID.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Orders)) {
-            return false;
-        }
-        Orders other = (Orders) object;
-        if ((this.orderID == null && other.orderID != null) || (this.orderID != null && !this.orderID.equals(other.orderID))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.example.MarketShop.Model.Orders[ orderID=" + orderID + " ]";
-    }
-    
 }

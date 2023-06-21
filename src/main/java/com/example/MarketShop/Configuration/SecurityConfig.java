@@ -4,10 +4,11 @@
  */
 package com.example.MarketShop.Configuration;
 
-//import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 /**
  *
@@ -15,13 +16,19 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SecurityConfig {
-    
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http.authorizeRequests()
-//                .anyRequest().authenticated()
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/","/product").permitAll()
+                .anyRequest().permitAll();
 //                .and()
 //                .oauth2Login();
-//        return http.build();
-//    }
+        return http.build();
+    }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
+    }
 }

@@ -16,6 +16,9 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  *
@@ -23,7 +26,7 @@ import lombok.Data;
  */
 @Entity
 @Data
-@Table(catalog = "marketshop", schema = "")
+@Table(name = "Orderdetail", catalog = "marketshop")
 @NamedQueries({
     @NamedQuery(name = "Orderdetail.findAll", query = "SELECT o FROM Orderdetail o"),
     @NamedQuery(name = "Orderdetail.findByOrderID", query = "SELECT o FROM Orderdetail o WHERE o.orderdetailPK.orderID = :orderID"),
