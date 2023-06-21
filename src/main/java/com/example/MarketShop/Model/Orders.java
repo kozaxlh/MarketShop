@@ -5,8 +5,9 @@
 package com.example.MarketShop.Model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -51,7 +52,7 @@ public class Orders implements Serializable {
     @Basic(optional = false)
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private LocalDate date;
     
     @Basic(optional = false)
     @Column(nullable = false)
@@ -67,7 +68,7 @@ public class Orders implements Serializable {
     private Users customer;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orders", fetch = FetchType.LAZY)
-    private Collection<Orderdetail> orderdetailCollection;
+    private Collection<Orderdetail> productList;
 
     public Orders() {
     }
@@ -76,7 +77,7 @@ public class Orders implements Serializable {
         this.orderID = orderID;
     }
 
-    public Orders(Integer orderID, Date date, float total, String note) {
+    public Orders(Integer orderID, LocalDate date, float total, String note) {
         this.orderID = orderID;
         this.date = date;
         this.total = total;

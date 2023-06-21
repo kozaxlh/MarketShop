@@ -7,7 +7,6 @@ import org.modelmapper.ModelMapper;
 
 @SpringBootApplication
 public class MarketShopApplication {
-
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();

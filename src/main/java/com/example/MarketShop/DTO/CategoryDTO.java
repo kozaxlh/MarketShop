@@ -22,5 +22,5 @@ public class CategoryDTO implements Serializable {
     private Integer catagoryID;
     private String name;
     private String description;
-    private Collection<ProductDTO> productCollection;
+//    private Collection<ProductDTO> productCollection;
 }
