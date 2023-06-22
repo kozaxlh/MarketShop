@@ -6,9 +6,12 @@ package com.example.MarketShop.DTO;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 
 /**
  *
@@ -29,6 +32,7 @@ public class UsersDTO implements Serializable {
     private String city;
     
     private List usersRole;
-    
+
+    @JsonProperty("ordersList")
     private List<OrdersDTO> orders;
 }
