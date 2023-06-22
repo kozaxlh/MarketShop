@@ -85,7 +85,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     private void checkExistedProductName(Product product) {
-        boolean existedProductName = productRepository.findByProductName(product.getProductName()).isPresent();
+        Optional<Product> checkedProduct = productRepository.findByProductName(product.getProductName());
+
+        boolean existedProductName = checkedProduct.isPresent() && !checkedProduct.get().getProductID().equals(product.getProductID());
         if (existedProductName) {
             throw new AppException(HttpStatus.BAD_REQUEST, "Tên sản phẩm đã tồn tại");
         }
