@@ -18,15 +18,19 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.*;
 
 /**
  *
  * @author Admin
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Data
-@Table(catalog = "marketshop", schema = "")
+@Table(name = "Users", catalog = "marketshop")
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
     @NamedQuery(name = "Users.findByUserID", query = "SELECT u FROM Users u WHERE u.userID = :userID"),
@@ -69,17 +73,17 @@ public class Users implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", fetch = FetchType.LAZY)
     private Collection<Orders> orders;
 
-    public Users() {
-    }
-
-    public Users(Integer userID) {
-        this.userID = userID;
-    }
-
-    public Users(Integer userID, String email, String password, String fullname) {
-        this.userID = userID;
-        this.email = email;
-        this.password = password;
-        this.fullname = fullname;
-    }
+//    public Users() {
+//    }
+//
+//    public Users(Integer userID) {
+//        this.userID = userID;
+//    }
+//
+//    public Users(Integer userID, String email, String password, String fullname) {
+//        this.userID = userID;
+//        this.email = email;
+//        this.password = password;
+//        this.fullname = fullname;
+//    }
 }

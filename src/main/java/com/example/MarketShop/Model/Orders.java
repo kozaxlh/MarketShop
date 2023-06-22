@@ -25,12 +25,16 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
-import lombok.Data;
+import lombok.*;
 
 /**
  *
  * @author Admin
  */
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Data
 @Table(name = "Orders", catalog = "marketshop")
@@ -70,17 +74,17 @@ public class Orders implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orders", fetch = FetchType.LAZY)
     private Collection<Orderdetail> productList;
 
-    public Orders() {
-    }
-
-    public Orders(Integer orderID) {
-        this.orderID = orderID;
-    }
-
-    public Orders(Integer orderID, LocalDate date, float total, String note) {
-        this.orderID = orderID;
-        this.date = date;
-        this.total = total;
-        this.note = note;
-    }
+//    public Orders() {
+//    }
+//
+//    public Orders(Integer orderID) {
+//        this.orderID = orderID;
+//    }
+//
+//    public Orders(Integer orderID, LocalDate date, float total, String note) {
+//        this.orderID = orderID;
+//        this.date = date;
+//        this.total = total;
+//        this.note = note;
+//    }
 }
