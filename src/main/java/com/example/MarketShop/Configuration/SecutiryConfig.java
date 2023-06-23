@@ -11,7 +11,8 @@ public class SecutiryConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/","/product").permitAll()
+                .requestMatchers("/","/login","/logout").permitAll()
+                .requestMatchers("/api/users").hasAnyRole("USER", "ADMIN")
                 .anyRequest().permitAll();
 //                .and()
 //                .oauth2Login();
