@@ -5,7 +5,7 @@
 package com.example.MarketShop.Model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
 import jakarta.persistence.Basic;
@@ -55,8 +55,8 @@ public class Orders implements Serializable {
     
     @Basic(optional = false)
     @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private LocalDate date;
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime date;
     
     @Basic(optional = false)
     @Column(nullable = false)

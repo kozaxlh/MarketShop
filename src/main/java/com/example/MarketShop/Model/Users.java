@@ -58,7 +58,7 @@ public class Users implements Serializable {
     private String password;
     
     @Basic(optional = false)
-    @Column(nullable = false, length = 40)
+    @Column(length = 40)
     private String fullname;
     
     @Column(length = 50)
