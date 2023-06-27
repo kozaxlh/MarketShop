@@ -6,7 +6,11 @@ package com.example.MarketShop.Repository;
 
 import com.example.MarketShop.Model.Product;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  *
@@ -14,4 +18,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     Optional<Product> findByProductName(String productName);
+//    @Query("SELECT * FROM Product")
+//    Page<Product> findAll(Pageable pageable);
 }
