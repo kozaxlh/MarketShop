@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.MarketShop.Model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import jakarta.persistence.Basic;
@@ -18,22 +15,27 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.*;
 
 /**
  *
  * @author Admin
  */
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Data
-@Table(catalog = "marketshop", schema = "")
+@Table(catalog = "marketshop")
 @NamedQueries({
     @NamedQuery(name = "Roles.findAll", query = "SELECT r FROM Roles r"),
     @NamedQuery(name = "Roles.findByRoleId", query = "SELECT r FROM Roles r WHERE r.roleId = :roleId"),
     @NamedQuery(name = "Roles.findByRoleName", query = "SELECT r FROM Roles r WHERE r.roleName = :roleName")})
 public class Roles implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -46,16 +48,4 @@ public class Roles implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId", fetch = FetchType.LAZY)
     private Collection<UserRole> userRoleCollection;
-
-    public Roles() {
-    }
-
-    public Roles(Short roleId) {
-        this.roleId = roleId;
-    }
-
-    public Roles(Short roleId, String roleName) {
-        this.roleId = roleId;
-        this.roleName = roleName;
-    }
 }

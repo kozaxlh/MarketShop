@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.MarketShop.Model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import jakarta.persistence.Basic;
@@ -29,7 +26,6 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Data
 @Table(name = "Users", catalog = "marketshop")
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
@@ -41,6 +37,7 @@ import lombok.*;
     @NamedQuery(name = "Users.findByCity", query = "SELECT u FROM Users u WHERE u.city = :city")})
 public class Users implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -50,11 +47,11 @@ public class Users implements Serializable {
     private Integer userID;
     
     @Basic(optional = false)
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String email;
     
     @Basic(optional = false)
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false)
     private String password;
     
     @Basic(optional = false)
@@ -72,18 +69,4 @@ public class Users implements Serializable {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", fetch = FetchType.LAZY)
     private Collection<Orders> orders;
-
-//    public Users() {
-//    }
-//
-//    public Users(Integer userID) {
-//        this.userID = userID;
-//    }
-//
-//    public Users(Integer userID, String email, String password, String fullname) {
-//        this.userID = userID;
-//        this.email = email;
-//        this.password = password;
-//        this.fullname = fullname;
-//    }
 }

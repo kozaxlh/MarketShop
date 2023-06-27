@@ -1,9 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.MarketShop.Model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -17,14 +14,17 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.*;
 
 /**
  *
  * @author Admin
  */
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Data
 @Table(name = "product")
 @NamedQueries({
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
@@ -36,7 +36,9 @@ import lombok.Data;
     @NamedQuery(name = "Product.findByPrice", query = "SELECT p FROM Product p WHERE p.price = :price")})
 public class Product implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -65,20 +67,4 @@ public class Product implements Serializable {
     @JoinColumn(name = "categoryID", referencedColumnName = "categoryID")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Category category;
-
-    public Product() {
-    }
-
-    public Product(Integer productID) {
-        this.productID = productID;
-    }
-
-    public Product(Integer productID, String productName, String unit, int amount, String image, float price) {
-        this.productID = productID;
-        this.productName = productName;
-        this.unit = unit;
-        this.amount = amount;
-        this.image = image;
-        this.price = price;
-    }
 }

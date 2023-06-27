@@ -4,6 +4,7 @@
  */
 package com.example.MarketShop.Model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -36,7 +37,6 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Data
 @Table(name = "Orders", catalog = "marketshop")
 @NamedQueries({
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
@@ -45,6 +45,7 @@ import lombok.*;
     @NamedQuery(name = "Orders.findByTotal", query = "SELECT o FROM Orders o WHERE o.total = :total")})
 public class Orders implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     
     @Id
@@ -74,17 +75,4 @@ public class Orders implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orders", fetch = FetchType.LAZY)
     private Collection<Orderdetail> productList;
 
-//    public Orders() {
-//    }
-//
-//    public Orders(Integer orderID) {
-//        this.orderID = orderID;
-//    }
-//
-//    public Orders(Integer orderID, LocalDate date, float total, String note) {
-//        this.orderID = orderID;
-//        this.date = date;
-//        this.total = total;
-//        this.note = note;
-//    }
 }

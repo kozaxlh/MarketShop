@@ -4,6 +4,7 @@
  */
 package com.example.MarketShop.Model;
 
+import java.io.Serial;
 import java.io.Serializable;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -15,17 +16,17 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  *
  * @author Admin
  */
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Data
 @Table(name = "Orderdetail", catalog = "marketshop")
 @NamedQueries({
     @NamedQuery(name = "Orderdetail.findAll", query = "SELECT o FROM Orderdetail o"),
@@ -35,6 +36,7 @@ import lombok.ToString;
     @NamedQuery(name = "Orderdetail.findByPrice", query = "SELECT o FROM Orderdetail o WHERE o.price = :price")})
 public class Orderdetail implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     
     @EmbeddedId
@@ -56,20 +58,4 @@ public class Orderdetail implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Product product;
 
-    public Orderdetail() {
-    }
-
-    public Orderdetail(OrderdetailPK orderdetailPK) {
-        this.orderdetailPK = orderdetailPK;
-    }
-
-    public Orderdetail(OrderdetailPK orderdetailPK, short quantity, float price) {
-        this.orderdetailPK = orderdetailPK;
-        this.quantity = quantity;
-        this.price = price;
-    }
-
-    public Orderdetail(int orderID, int productID) {
-        this.orderdetailPK = new OrderdetailPK(orderID, productID);
-    }
 }
