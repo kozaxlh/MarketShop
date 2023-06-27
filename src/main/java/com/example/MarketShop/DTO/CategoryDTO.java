@@ -6,6 +6,10 @@ package com.example.MarketShop.DTO;
 
 import java.io.Serializable;
 import java.util.Collection;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +23,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CategoryDTO implements Serializable {
 
-    private Integer catagoryID;
+    private Integer categoryID;
+
+    @NotEmpty
+    @NotNull
     private String name;
+
+    @NotNull
     private String description;
-//    private Collection<ProductDTO> productCollection;
+
+    @JsonFilter("ProductInCategory")
+    private Collection<ProductDTO> productCollection;
 }

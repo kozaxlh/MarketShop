@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Configuration;
 public class FilterConfig {
     public FilterConfig (ObjectMapper objectMapper) {
         SimpleFilterProvider filterProvider = new SimpleFilterProvider();
-        filterProvider.addFilter("UsersInfo",SimpleBeanPropertyFilter.serializeAllExcept("userID","password"));
+        filterProvider.addFilter("UsersInfo", SimpleBeanPropertyFilter.serializeAllExcept("userID", "password"));
+        filterProvider.addFilter("ProductInCategory", SimpleBeanPropertyFilter.serializeAllExcept("productID", "categoryID"));
 
         objectMapper.setFilterProvider(filterProvider);
     }
