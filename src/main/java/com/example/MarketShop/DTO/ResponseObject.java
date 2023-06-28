@@ -19,4 +19,9 @@ public class ResponseObject<O> {
     private String status;
     private String message;
     private O data;
+
+    public ResponseObject(String status, String message) {
+        this.status = status;
+        this.message = message;
+    }
 }

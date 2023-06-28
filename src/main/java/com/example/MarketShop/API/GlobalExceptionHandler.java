@@ -8,6 +8,7 @@ import com.example.MarketShop.DTO.ResponseObject;
 import com.example.MarketShop.Exception.AppException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,7 +30,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ResponseObject> handleAppException(AppException e) {
         e.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
-                new ResponseObject("Failed", e.getMessege(),"")
+                new ResponseObject("Failed", e.getMessege())
+        );
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ResponseObject> handleUnAuthorization(Exception e){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(
+                new ResponseObject("Failed", "You haven't permission to access")
         );
     }
 }
