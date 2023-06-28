@@ -10,6 +10,8 @@ import com.example.MarketShop.Exception.AppException;
 import com.example.MarketShop.DTO.ResponseObject;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.modelmapper.ModelMapper;
@@ -55,16 +57,17 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ResponseObject> updateProduct(@RequestBody ProductDTO input, @PathVariable Integer id) {
         input.setProductID(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("Success", "Sản phẩn đã sửa thành công",
-                        productService.updateProduct(input))
+                new ResponseObject("Success", "Sản phẩn đã sửa thành công", productService.updateProduct(input))
         );
     }
 
     @PostMapping()
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<ResponseObject> addProduct(@RequestBody @Valid ProductDTO input) {
         ProductDTO product = productService.addProduct(input);
 
@@ -74,6 +77,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @Secured("ROLE_ADMIN")
     public ResponseEntity<ResponseObject> delete(@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("Success", "Xóa thành công", productService.deleteProduct(id)));
@@ -83,7 +87,7 @@ public class ProductController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<ResponseObject> duplicatedNameException(AppException e) {
         return ResponseEntity.status(e.getCode()).body(
-                new ResponseObject("Failed", e.getMessege(), "")
+                new ResponseObject("Failed", e.getMessege())
         );
     }
 

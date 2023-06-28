@@ -20,18 +20,23 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeHttpRequests()
-                    .requestMatchers("/","/login","/logout").permitAll()
-                    .requestMatchers("/api/product").hasAnyRole("USER", "ADMIN")
+        http
+                .csrf().disable()
+                    .authorizeHttpRequests()
+                    .requestMatchers("/","/login","/logout","/register").permitAll()
+//                    .requestMatchers("/api/product").hasAnyRole("USER", "ADMIN")
                     .requestMatchers("/api/users").hasRole("ADMIN")
                     .anyRequest().authenticated()
                     .and()
-//                .oauth2Login()
-//                    .and()
+                .oauth2Login()
+                    .authorizationEndpoint()
+                        .and()
+                    .and()
                 .formLogin()
                     .and()
                 .httpBasic()
+                    .and()
+                .rememberMe().tokenRepository(this.persistentTokenRepository()).tokenValiditySeconds(1 * 24 * 60 * 60)
                     .and()
                 .logout();
         return http.build();
