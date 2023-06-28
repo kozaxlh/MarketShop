@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AppException.class)
     public ResponseEntity<ResponseObject> handleAppException(AppException e) {
         e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(
+        return ResponseEntity.status(e.getCode()).body(
                 new ResponseObject("Failed", e.getMessege())
         );
     }
