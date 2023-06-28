@@ -46,4 +46,9 @@ public class UserRole implements Serializable {
     @JoinColumn(name = "role_id", referencedColumnName = "role_id", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Roles roleId;
+
+    public UserRole(Users userId, Roles roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
+    }
 }

@@ -1,15 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.example.MarketShop.DTO;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +24,9 @@ import net.minidev.json.annotate.JsonIgnore;
 @JsonFilter("UsersInfo")
 public class UsersDTO implements Serializable {
     private Integer userID;
-
+    
+    @NotEmpty(message = "Email should not be empty")
+    @Email
     private String email;
 
     private String password;
@@ -36,7 +37,7 @@ public class UsersDTO implements Serializable {
 
     private String city;
 
-    private List usersRole;
+    private Set<RolesDTO> usersRole;
 
     @JsonProperty("ordersList")
     private List<OrdersDTO> orders;

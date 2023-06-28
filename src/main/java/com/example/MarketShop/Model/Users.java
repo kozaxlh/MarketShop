@@ -3,6 +3,9 @@ package com.example.MarketShop.Model;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
 import jakarta.persistence.Basic;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -65,8 +68,8 @@ public class Users implements Serializable {
     private String city;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId", fetch = FetchType.LAZY)
-    private Collection<UserRole> userRole;
+    private Set<UserRole> userRole;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer", fetch = FetchType.LAZY)
-    private Collection<Orders> orders;
+    private List<Orders> orders;
 }
