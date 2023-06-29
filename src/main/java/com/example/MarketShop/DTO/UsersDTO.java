@@ -37,7 +37,7 @@ public class UsersDTO implements Serializable {
 
     private String city;
 
-    private Set<RolesDTO> usersRole;
+    private Set usersRole;
 
     @JsonProperty("ordersList")
     private List<OrdersDTO> orders;

@@ -15,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -39,7 +38,7 @@ public class UsersServiceImpl implements UsersService {
     public List<UsersDTO> getUsersList(Pageable pageable) {
         List list = usersRepository.findAll(pageable).getContent()
                 .stream()
-                .map((users) -> modelMapper.map(users, UsersDTO.class,"OrdersDTOList"))
+                .map((users) -> modelMapper.map(users, UsersDTO.class, "OrdersDTOList"))
                 .collect(Collectors.toList());
 
         return list;
@@ -53,10 +52,8 @@ public class UsersServiceImpl implements UsersService {
             throw new AppException(HttpStatus.BAD_REQUEST, "Đã tồn tại tên tài khoản");
 
         Users newUsers = modelMapper.map(users, Users.class);
-        newUsers.setUserRole(Set.of(new UserRole(newUsers, rolesRepository.findByRoleName("ROLE_USER"))));
-
-        String encodePassword = passwordEncoder.encode(newUsers.getPassword());
-        newUsers.setPassword(encodePassword);
+            newUsers.setUserRole(Set.of(new UserRole(newUsers, rolesRepository.findByRoleName("ROLE_USER"))));
+            newUsers.setPassword(passwordEncoder.encode(newUsers.getPassword()));
 
         return modelMapper.map(usersRepository.save(newUsers), UsersRegisterDTO.class);
     }
