@@ -1,5 +1,8 @@
-spring:
+server:
    port: 8080
+   servlet:
+      context-path:
+spring:
    datasource:
       url: jdbc:mysql://localhost:3306/marketshop
       username: root
@@ -28,3 +31,8 @@ spring:
                github:
                   client-id: 17ae0530d87a1ccc9e49
                   client-secret: 7ff2dc2b1432936a764f69dd9ccc0dcf1a114ee6
+   mvc:
+      pathmatch:
+         matching-strategy: ant_path_matcher
+
+
