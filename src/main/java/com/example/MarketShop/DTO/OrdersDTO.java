@@ -2,6 +2,7 @@ package com.example.MarketShop.DTO;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ public class OrdersDTO implements Serializable {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = JsonFormat.DEFAULT_TIMEZONE)
     private LocalDateTime date;
 
+    @JsonProperty("totalPrice")
     private Float total;
 
     private String note;
