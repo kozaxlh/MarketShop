@@ -27,7 +27,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Orderdetail", catalog = "marketshop")
+@Table(name = "Orderdetail")
 @NamedQueries({
     @NamedQuery(name = "Orderdetail.findAll", query = "SELECT o FROM Orderdetail o"),
     @NamedQuery(name = "Orderdetail.findByOrderID", query = "SELECT o FROM Orderdetail o WHERE o.orderdetailPK.orderID = :orderID"),

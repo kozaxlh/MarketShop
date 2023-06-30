@@ -26,7 +26,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(catalog = "marketshop")
+@Table
 @NamedQueries({
     @NamedQuery(name = "Roles.findAll", query = "SELECT r FROM Roles r"),
     @NamedQuery(name = "Roles.findByRoleId", query = "SELECT r FROM Roles r WHERE r.roleId = :roleId"),

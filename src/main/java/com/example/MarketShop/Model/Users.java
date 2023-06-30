@@ -29,7 +29,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "Users", catalog = "marketshop")
+@Table(name = "Users")
 @NamedQueries({
     @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u"),
     @NamedQuery(name = "Users.findByUserID", query = "SELECT u FROM Users u WHERE u.userID = :userID"),

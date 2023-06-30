@@ -25,7 +25,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user_role", catalog = "marketshop", schema = "")
+@Table(name = "user_role", schema = "")
 @NamedQueries({
     @NamedQuery(name = "UserRole.findAll", query = "SELECT u FROM UserRole u"),
     @NamedQuery(name = "UserRole.findById", query = "SELECT u FROM UserRole u WHERE u.id = :id")})

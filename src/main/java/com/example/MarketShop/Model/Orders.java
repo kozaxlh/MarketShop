@@ -37,7 +37,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "Orders", catalog = "marketshop")
+@Table(name = "Orders")
 @NamedQueries({
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
     @NamedQuery(name = "Orders.findByOrderID", query = "SELECT o FROM Orders o WHERE o.orderID = :orderID"),
