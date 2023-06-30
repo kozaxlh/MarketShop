@@ -19,7 +19,7 @@ import java.util.List;
 public class SwaggerConfig implements WebMvcConfigurer {
     @Bean
     public Docket createApiDocket() {
-        return new Docket(DocumentationType.SWAGGER_2)
+        return new Docket(DocumentationType.OAS_30)
                 .apiInfo(getApiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.example.MarketShop.API"))
