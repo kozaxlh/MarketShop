@@ -8,9 +8,9 @@ https://marketshop-dknrr.appengine.bfcplatform.vn/swagger-ui
 https://marketshop-dknrr.appengine.bfcplatform.vn/
 
 ## Tài khoản admin
-Username: admin@admin.com
+Username: admin@admin.com\
 Password: admin
 
 ## Tài khoản user
-Username: user@user.com
+Username: user@user.com\
 Password: user
