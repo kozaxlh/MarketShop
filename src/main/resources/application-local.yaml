@@ -9,10 +9,10 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     generate-ddl: true
-    show-sql: false
+    show-sql: true
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        globally_quoted_identifiers: false
-        format_sql: false
+        globally_quoted_identifiers: true
+        format_sql: true
