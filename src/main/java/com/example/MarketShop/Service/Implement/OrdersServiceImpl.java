@@ -10,8 +10,12 @@ import com.example.MarketShop.Service.Interface.OrderdetailService;
 import com.example.MarketShop.Service.Interface.OrdersService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrdersServiceImpl implements OrdersService {
@@ -27,6 +31,16 @@ public class OrdersServiceImpl implements OrdersService {
         this.orderdetailService = orderdetailService;
         this.usersRepository = usersRepository;
         this.modelMapper = modelMapper;
+    }
+
+    @Override
+    public List<OrdersDTO> getByEmail(Pageable pageable, String email) {
+        List<OrdersDTO> result = usersRepository.findByEmail(pageable, email).get().getOrders()
+                .stream()
+                .map((element) -> modelMapper.map(element, OrdersDTO.class))
+                .collect(Collectors.toList());
+
+        return result;
     }
 
     @Override
