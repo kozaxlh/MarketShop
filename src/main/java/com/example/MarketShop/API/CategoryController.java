@@ -23,22 +23,22 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<ResponseObject> showCategory(
+    public ResponseEntity<ResponseObject<CategoryDTO>> showCategory(
             @RequestParam(defaultValue = DEFAULT_PAGE) int page,
             @RequestParam(defaultValue = DEFAULT_PAGE_LIMIT) int limit) {
         Pageable pageable = PageRequest.of(page - 1, limit);
         PageObject pages = new PageObject();
         pages.setPage(page);
         pages.setList(categoryService.getCategories(pageable));
-        pages.setTotalPage((int) Math.ceil( (double) categoryService.totalPage() / limit));
+        pages.setTotalPage((int) Math.ceil((double) categoryService.totalPage() / limit));
 
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("Success","Lấy danh mục thành công", pages)
+                new ResponseObject("Success", "Lấy danh mục thành công", pages)
         );
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseObject> findByID(@PathVariable Integer id) {
+    public ResponseEntity<ResponseObject<CategoryDTO>> findByID(@PathVariable Integer id) {
         CategoryDTO categoryDTO = categoryService.findByID(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -47,7 +47,7 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseObject> update(@RequestBody CategoryDTO input, @PathVariable Integer id) {
+    public ResponseEntity<ResponseObject<CategoryDTO>> update(@RequestBody CategoryDTO input, @PathVariable Integer id) {
         input.setCategoryID(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -56,7 +56,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<ResponseObject> add(@RequestBody @Valid CategoryDTO input) {
+    public ResponseEntity<ResponseObject<CategoryDTO>> add(@RequestBody @Valid CategoryDTO input) {
         CategoryDTO categoryDTO = categoryService.addCategory(input);
 
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -65,7 +65,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseObject> delete(@PathVariable Integer id){
+    public ResponseEntity<ResponseObject> delete(@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("Success", "Xóa thành công", categoryService.deleteCategory(id))
         );

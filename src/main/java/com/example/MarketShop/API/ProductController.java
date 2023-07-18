@@ -35,7 +35,7 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping()
-    public ResponseEntity<ResponseObject> getProductList(
+    public ResponseEntity<ResponseObject<ProductDTO>> getProductList(
             @RequestParam(defaultValue = DEFAULT_PAGE) int page,
             @RequestParam(defaultValue = DEFAULT_PAGE_LIMIT) int limit) {
         Pageable pageable = PageRequest.of(page - 1, limit);
@@ -48,7 +48,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseObject> findProductByID(@PathVariable Integer id) {
+    public ResponseEntity<ResponseObject<ProductDTO>> findProductByID(@PathVariable Integer id) {
         ProductDTO product = productService.findByID(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -58,7 +58,7 @@ public class ProductController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<ResponseObject> updateProduct(@RequestBody ProductDTO input, @PathVariable Integer id) {
+    public ResponseEntity<ResponseObject<ProductDTO>> updateProduct(@RequestBody ProductDTO input, @PathVariable Integer id) {
         input.setProductID(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -68,7 +68,7 @@ public class ProductController {
 
     @PostMapping()
     @Secured("ROLE_ADMIN")
-    public ResponseEntity<ResponseObject> addProduct(@RequestBody @Valid ProductDTO input) {
+    public ResponseEntity<ResponseObject<ProductDTO>> addProduct(@RequestBody @Valid ProductDTO input) {
         ProductDTO product = productService.addProduct(input);
 
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -78,7 +78,7 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     @Secured("ROLE_ADMIN")
-    public ResponseEntity<ResponseObject> delete(@PathVariable Integer id) {
+    public ResponseEntity<ResponseObject<ProductDTO>> delete(@PathVariable Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("Success", "Xóa thành công", productService.deleteProduct(id)));
     }
