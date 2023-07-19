@@ -35,7 +35,9 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public List<OrdersDTO> getByEmail(Pageable pageable, String email) {
-        List<OrdersDTO> result = usersRepository.findByEmail(pageable, email).get().getOrders()
+        Users user = usersRepository.findByEmail(email).get();
+
+        List<OrdersDTO> result = ordersRepository.findByCustomer(pageable, user).getContent()
                 .stream()
                 .map((element) -> modelMapper.map(element, OrdersDTO.class))
                 .collect(Collectors.toList());
