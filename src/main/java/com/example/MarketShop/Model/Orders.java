@@ -29,7 +29,6 @@ import jakarta.persistence.TemporalType;
 import lombok.*;
 
 /**
- *
  * @author Admin
  */
 @AllArgsConstructor
@@ -39,39 +38,39 @@ import lombok.*;
 @Entity
 @Table(name = "Orders")
 @NamedQueries({
-    @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
-    @NamedQuery(name = "Orders.findByOrderID", query = "SELECT o FROM Orders o WHERE o.orderID = :orderID"),
-    @NamedQuery(name = "Orders.findByDate", query = "SELECT o FROM Orders o WHERE o.date = :date"),
-    @NamedQuery(name = "Orders.findByTotal", query = "SELECT o FROM Orders o WHERE o.total = :total")})
+        @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
+        @NamedQuery(name = "Orders.findByOrderID", query = "SELECT o FROM Orders o WHERE o.orderID = :orderID"),
+        @NamedQuery(name = "Orders.findByDate", query = "SELECT o FROM Orders o WHERE o.date = :date"),
+        @NamedQuery(name = "Orders.findByTotal", query = "SELECT o FROM Orders o WHERE o.total = :total")})
 public class Orders implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "orderID", nullable = false)
     private Integer orderID;
-    
+
     @Basic(optional = false)
-    @Column(nullable = false)
+    @Column(insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime date;
-    
+
     @Basic(optional = false)
     @Column(nullable = false)
     private float total;
-    
+
     @Basic(optional = false)
     @Lob
     @Column(nullable = false, length = 65535)
     private String note;
-    
+
     @JoinColumn(name = "CustomerID", referencedColumnName = "userID", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Users customer;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "orders", fetch = FetchType.LAZY)
     private Collection<Orderdetail> productList;
 
