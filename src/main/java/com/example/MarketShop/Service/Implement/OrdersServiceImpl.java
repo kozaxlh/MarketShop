@@ -7,10 +7,11 @@ import com.example.MarketShop.Model.Orders;
 import com.example.MarketShop.Model.Users;
 import com.example.MarketShop.Repository.OrdersRepository;
 import com.example.MarketShop.Repository.UsersRepository;
-import com.example.MarketShop.Service.Interface.OrderdetailService;
 import com.example.MarketShop.Service.Interface.OrdersService;
+import org.hibernate.exception.DataException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -59,7 +60,7 @@ public class OrdersServiceImpl implements OrdersService {
                         .reduce(0f, (total, item) -> total + item)
         );
 
-        int insertID = ordersRepository.getLastInsertedID() + 1;
+        int insertID = ordersRepository.getAutoIncrementID();
         orders.getProductList().stream()
                 .forEach(product ->
                         product.setOrderdetailPK(new OrderdetailPK(
@@ -68,6 +69,11 @@ public class OrdersServiceImpl implements OrdersService {
                         ))
                 );
 
-        return modelMapper.map(ordersRepository.save(orders), OrdersDTO.class);
+        try {
+            OrdersDTO result = modelMapper.map(ordersRepository.save(orders), OrdersDTO.class);
+            return result;
+        } catch (DataIntegrityViolationException e) {
+            throw new AppException(HttpStatus.BAD_REQUEST, "Không đủ hàng trong kho");
+        }
     }
 }
