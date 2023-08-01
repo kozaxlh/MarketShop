@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String handleUnknownedException(Exception e) {
+    public ResponseObject handleUnknownedException(Exception e) {
         e.printStackTrace();
-        return "Unknown error";
+        return new ResponseObject("Failed", "Unknown error");
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
