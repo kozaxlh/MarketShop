@@ -4,28 +4,34 @@ import com.example.MarketShop.DTO.ProductDTO;
 import com.example.MarketShop.Exception.AppException;
 import com.example.MarketShop.Model.Product;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.example.MarketShop.Repository.ProductRepository;
 import com.example.MarketShop.Service.Interface.ProductService;
+
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 
 /**
- *
  * @author Admin
  */
 @Service
 public class ProductServiceImpl implements ProductService {
-    @Autowired
     private ModelMapper modelMapper;
+    private ProductRepository productRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    public ProductServiceImpl(ModelMapper modelMapper, ProductRepository productRepository) {
+        this.modelMapper = modelMapper;
+        this.productRepository = productRepository;
+    }
 
     @Override
     public List<ProductDTO> getProductList(Pageable pageable) {
@@ -39,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO findByID(Integer productID) {
         Optional<Product> product = productRepository.findById(productID);
-        if (!product.isPresent()) {
+        if (product.isEmpty() || product.get().getDelete_at() != null) {
             throw new AppException(HttpStatus.OK, "Không tìm thấy sản phẩm");
         }
         return modelMapper.map(product.get(), ProductDTO.class);
@@ -64,6 +70,7 @@ public class ProductServiceImpl implements ProductService {
                     item.setPrice(product.getPrice());
                     item.setImage(product.getImage());
                     item.setCategory(product.getCategory());
+                    item.setUpdate_at(LocalDateTime.now());
                     return modelMapper.map(productRepository.save(item), ProductDTO.class);
                 }).orElseThrow(() -> new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy sản phẩm"));
         return updatedProduct;
@@ -72,10 +79,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public String deleteProduct(Integer productID) {
         Optional<Product> product = productRepository.findById(productID);
-        if (product.isEmpty()) {
+        if (product.isEmpty() || product.get().getDelete_at() != null) {
             throw new AppException(HttpStatus.NOT_FOUND, "Không tìm thấy sản phẩm để xóa");
         }
-        productRepository.delete(product.get());
+        productRepository.delete(String.valueOf(productID));
         return "";
 
     }
@@ -90,7 +97,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public int totalPage(){
-        return (int) productRepository.count() ;
-    };
+    public int totalPage() {
+        return (int) productRepository.count();
+    }
+
+    ;
 }

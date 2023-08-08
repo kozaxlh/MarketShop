@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,17 +23,18 @@ import java.util.stream.Collectors;
 
 @Service
 public class UsersServiceImpl implements UsersService {
-    @Autowired
     private ModelMapper modelMapper;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private UsersRepository usersRepository;
+    private RolesRepository rolesRepository;
 
     @Autowired
-    private RolesRepository rolesRepository;
+    public UsersServiceImpl(ModelMapper modelMapper, PasswordEncoder passwordEncoder, UsersRepository usersRepository, RolesRepository rolesRepository) {
+        this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
+        this.usersRepository = usersRepository;
+        this.rolesRepository = rolesRepository;
+    }
 
     @Override
     public List<UsersDTO> getUsersList(Pageable pageable) {
@@ -48,12 +50,14 @@ public class UsersServiceImpl implements UsersService {
     public UsersRegisterDTO register(UsersRegisterDTO users) {
         Optional<Users> checkedUsers = usersRepository.findByEmail(users.getEmail());
 
-        if(checkedUsers.isPresent())
+        if (checkedUsers.isPresent())
             throw new AppException(HttpStatus.BAD_REQUEST, "Đã tồn tại tên tài khoản");
 
         Users newUsers = modelMapper.map(users, Users.class);
-            newUsers.setUserRole(Set.of(new UserRole(newUsers, rolesRepository.findByRoleName("ROLE_USER"))));
-            newUsers.setPassword(passwordEncoder.encode(newUsers.getPassword()));
+        newUsers.setUserRole(Set.of(new UserRole(newUsers, rolesRepository.findByRoleName("ROLE_USER"))));
+        newUsers.setPassword(passwordEncoder.encode(newUsers.getPassword()));
+        newUsers.setCreate_at(LocalDateTime.now());
+        newUsers.setUpdate_at(LocalDateTime.now());
 
         return modelMapper.map(usersRepository.save(newUsers), UsersRegisterDTO.class);
     }

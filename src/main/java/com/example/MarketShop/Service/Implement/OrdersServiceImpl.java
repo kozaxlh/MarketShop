@@ -8,7 +8,6 @@ import com.example.MarketShop.Model.Users;
 import com.example.MarketShop.Repository.OrdersRepository;
 import com.example.MarketShop.Repository.UsersRepository;
 import com.example.MarketShop.Service.Interface.OrdersService;
-import org.hibernate.exception.DataException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,6 +71,7 @@ public class OrdersServiceImpl implements OrdersService {
 
         try {
             OrdersDTO result = modelMapper.map(ordersRepository.save(orders), OrdersDTO.class);
+            result.setDate(LocalDateTime.now());
             return result;
         } catch (DataIntegrityViolationException e) {
             throw new AppException(HttpStatus.BAD_REQUEST, "Không đủ hàng trong kho");
