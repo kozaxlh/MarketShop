@@ -67,6 +67,15 @@ public class Orders implements Serializable {
     @Column(nullable = false, length = 65535)
     private String note;
 
+    @Basic(optional = false)
+    @Column(insertable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime update_at;
+
+    @Basic(optional = false)
+    @Column
+    private LocalDateTime delete_at;
+
     @JoinColumn(name = "CustomerID", referencedColumnName = "userID", nullable = false)
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Users customer;
