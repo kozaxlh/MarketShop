@@ -12,20 +12,20 @@ import java.util.List;
 @NoRepositoryBean
 public interface GenericRepository<O, T> extends JpaRepository<O, T>, JpaSpecificationExecutor<O> {
     @Override
-    @Query("SELECT e FROM #{#entityName} e WHERE e.delete_at IS NULL")
+    @Query(value = "SELECT e FROM #{#entityName} e WHERE e.delete_at IS NULL", nativeQuery = true)
     Page<O> findAll(Pageable pageable);
 
     @Override
-    @Query("SELECT e FROM #{#entityName} e WHERE e.delete_at IS NULL")
+    @Query(value = "SELECT e FROM #{#entityName} e WHERE e.delete_at IS NULL", nativeQuery = true)
     List<O> findAll();
 
     @Override
-    @Query("SELECT count(*) FROM #{#entityName} e WHERE e.delete_at IS NULL")
+    @Query(value = "SELECT count(*) FROM #{#entityName} e WHERE e.delete_at IS NULL", nativeQuery = true)
     long count();
 
-    @Query("SELECT e FROM #{#entityName} e WHERE e.delete_at IS NOT NULL")
+    @Query(value = "SELECT e FROM #{#entityName} e WHERE e.delete_at IS NOT NULL", nativeQuery = true)
     List<O> recycleBin();
 
-    @Query("SELECT count(*) FROM #{#entityName} e WHERE e.delete_at IS NOT NULL")
+    @Query(value = "SELECT count(*) FROM #{#entityName} e WHERE e.delete_at IS NOT NULL", nativeQuery = true)
     long countAll();
 }
