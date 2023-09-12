@@ -4,12 +4,8 @@ import com.example.MarketShop.DTO.OrdersDTO;
 import com.example.MarketShop.DTO.PageObject;
 import com.example.MarketShop.DTO.ResponseObject;
 import com.example.MarketShop.Repository.OrdersRepository;
-import com.example.MarketShop.Service.Interface.OrderdetailService;
 import com.example.MarketShop.Service.Interface.OrdersService;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -25,15 +21,11 @@ public class OrdersController {
     final private String DEFAULT_PAGE_LIMIT = "5";
     final private String DEFAULT_PAGE = "1";
     private OrdersService ordersService;
-
-    private OrderdetailService orderdetailService;
     private final OrdersRepository ordersRepository;
 
     @Autowired
-    public OrdersController(OrdersService ordersService, OrderdetailService orderdetailService,
-                            OrdersRepository ordersRepository) {
+    public OrdersController(OrdersService ordersService, OrdersRepository ordersRepository) {
         this.ordersService = ordersService;
-        this.orderdetailService = orderdetailService;
         this.ordersRepository = ordersRepository;
     }
 

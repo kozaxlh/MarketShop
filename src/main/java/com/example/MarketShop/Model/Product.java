@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 /**
  * @author Admin
